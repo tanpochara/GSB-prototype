@@ -16,7 +16,7 @@ import {
 } from "@chakra-ui/react";
 import Router from "next/router";
 import React, { useContext, useState } from "react";
-import LotteryContext from "../context/lotteryContext";
+import LotteryContext from "../context/LotteryContext";
 
 export const LastThree = () => {
   const [selected, setSelected] = useState<string>("");

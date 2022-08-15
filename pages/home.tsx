@@ -3,7 +3,7 @@ import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useContext } from "react";
 import { Footer, Tabs } from "../src/components/Footer";
-import LotteryContext from "../src/context/lotteryContext";
+import LotteryContext from "../src/context/LotteryContext";
 
 const Home: NextPage = () => {
   const router = useRouter();
