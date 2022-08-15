@@ -20,10 +20,16 @@ import LotteryContext from "../context/lotteryContext";
 
 export const LastTwo = () => {
   const [selected, setSelected] = useState<string>("");
+  const [status, setStatus] = useState<boolean>(false);
   const { availableNumber, setSelectedLottery, selectedLottery } =
     useContext(LotteryContext);
   const [displayNumber, setDisplayNumber] = useState(availableNumber);
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const getRandom = () => {
+    const temp = Math.floor(Math.random() * 2) == 1;
+    setStatus(temp);
+  };
 
   const handlechangInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const temp = e.target.value;
@@ -66,6 +72,7 @@ export const LastTwo = () => {
                   p="10px"
                   onClick={() => {
                     setSelected(number);
+                    getRandom();
                     onOpen();
                   }}
                 >
@@ -88,13 +95,20 @@ export const LastTwo = () => {
               {" "}
               คุณต้องการซื้อเลข : {selected}{" "}
             </Text>
+            <Text color="black" fontSize="20px">
+              สถานะ: {status ? "มี" : "หมด"}
+            </Text>
           </ModalBody>
 
           <ModalFooter>
             <Button colorScheme="red" mr={3} onClick={onClose}>
-              ไม่ใช่
+              ยกเลิก
             </Button>
-            <Button colorScheme="whatsapp" onClick={handleBuyLottery}>
+            <Button
+              colorScheme="whatsapp"
+              onClick={handleBuyLottery}
+              disabled={!status}
+            >
               {" "}
               ดำเนินการซื้อ{" "}
             </Button>
