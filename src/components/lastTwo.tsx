@@ -1,48 +1,106 @@
-import { Input, Text, Button, Container, Box } from "@chakra-ui/react";
-import React, { useState } from "react";
+import {
+  Input,
+  Text,
+  Button,
+  Container,
+  Box,
+  Divider,
+  useDisclosure,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+} from "@chakra-ui/react";
+import Router from "next/router";
+import React, { useContext, useState } from "react";
+import LotteryContext from "../context/lotteryContext";
 
 export const LastTwo = () => {
-  const [selected, setSelected] = useState<number>(0);
-  const val = [
-    123123111, 11020311, 1239012322, 12312312333, 123123344, 1231231255,
-    12312311, 12312311,
-  ];
-  const [data, setData] = useState<number[]>([
-    123123111, 11020311, 1239012322, 12312312333, 123123344, 1231231255,
-    12312311, 12312311,
-  ]);
-  const handlechangInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const temp = parseInt(e.target.value);
-    const display = val.filter((num) => {
-      const lastTwo = num % 100;
-      return lastTwo == temp;
-    });
+  const [selected, setSelected] = useState<string>("");
+  const { availableNumber, setSelectedLottery, selectedLottery } =
+    useContext(LotteryContext);
+  const [displayNumber, setDisplayNumber] = useState(availableNumber);
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
-    setData(display);
+  const handlechangInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const temp = e.target.value;
+    const display = availableNumber.filter((num: string) => {
+      return num.slice(-2) == temp;
+    });
+    setDisplayNumber(display);
     if (e.target.value.length == 0) {
-      setData(val);
+      setDisplayNumber(availableNumber);
     }
+  };
+
+  const handleBuyLottery = (e: any) => {
+    const temp = selectedLottery;
+    temp.push(selected);
+    setSelectedLottery(temp);
+    Router.push("/home");
   };
 
   return (
     <>
-      <Container m="20px">
+      <Container p="0px">
+        <Text fontSize="20px" color="rgba(15, 12, 12, 0.7)" mt="10px">
+          {" "}
+          สถานะ: สองตัวท้าย{" "}
+        </Text>
         <Input
-          placeholder="Basic usage"
-          pt={5}
+          mt="10px"
+          placeholder="โปรดเลือกเลขที่คุณต้องการ"
           size="lg"
           onChange={handlechangInput}
         />
-        <Text>สองตัวท้าย</Text>
 
-        {data.map((number) => {
-          return (
-            <Box key={number}>
-              <Text> {number} </Text>
-            </Box>
-          );
-        })}
+        <Box mb="60px" borderRadius="14px" bgColor="white" p="30px" mt="20px">
+          {displayNumber.map((number: string) => {
+            return (
+              <>
+                <Box
+                  key={number}
+                  p="10px"
+                  onClick={() => {
+                    setSelected(number);
+                    onOpen();
+                  }}
+                >
+                  <Text textAlign="center"> {number} </Text>
+                </Box>
+                <Divider />
+              </>
+            );
+          })}
+        </Box>
       </Container>
+
+      <Modal isOpen={isOpen} onClose={onClose} isCentered>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader> ยืนยันการซื้อ </ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Text color="black" fontSize="20px">
+              {" "}
+              คุณต้องการซื้อเลข : {selected}{" "}
+            </Text>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme="red" mr={3} onClick={onClose}>
+              ไม่ใช่
+            </Button>
+            <Button colorScheme="whatsapp" onClick={handleBuyLottery}>
+              {" "}
+              ดำเนินการซื้อ{" "}
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </>
   );
 };

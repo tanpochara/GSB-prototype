@@ -1,10 +1,13 @@
 import { Box, Center, Container, Divider, Stack, Text } from "@chakra-ui/react";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
+import { useContext } from "react";
 import { Footer, Tabs } from "../src/components/Footer";
+import LotteryContext from "../src/context/lotteryContext";
 
 const Home: NextPage = () => {
   const router = useRouter();
+  const { selectedLottery } = useContext(LotteryContext);
   return (
     <>
       <Container>
@@ -53,24 +56,24 @@ const Home: NextPage = () => {
         <Box p="20px" borderRadius="14px" bgColor="#E85B9E" mt="20px">
           <Stack alignItems="center" justifyContent="center">
             <Text className="text-title"> ตัวเลือกสำหรับเดือนนี้ </Text>
-            <Box
-              borderRadius="11px"
-              bgColor="#F41163"
-              color="white"
-              p="5px 10px"
-            >
-              {" "}
-              Mock data{" "}
-            </Box>
-            <Box
-              borderRadius="11px"
-              bgColor="#F41163"
-              color="white"
-              p="5px 10px"
-            >
-              {" "}
-              Mock data{" "}
-            </Box>
+            {selectedLottery.length != 0 ? (
+              selectedLottery.map((item) => {
+                return (
+                  <Box
+                    key={item}
+                    borderRadius="11px"
+                    bgColor="#F41163"
+                    color="white"
+                    p="5px 10px"
+                  >
+                    {" "}
+                    {item}
+                  </Box>
+                );
+              })
+            ) : (
+              <Text> ยังไม่มีตัวเลือกในเดือนนี้ </Text>
+            )}
           </Stack>
           <Divider color="white" m="10px 0px" size="2px" />
           <Text fontSize="24px"> รางวัลสูงสุด</Text>

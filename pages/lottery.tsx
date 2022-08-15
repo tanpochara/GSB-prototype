@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import {
-  Input,
+  Box,
   Tab,
   TabList,
   TabPanel,
@@ -8,6 +8,7 @@ import {
   Container,
   Tabs,
   Text,
+  Button,
 } from "@chakra-ui/react";
 import { LastTwo } from "../src/components/lastTwo";
 import { LastThree } from "../src/components/lastThree";
@@ -17,22 +18,34 @@ import { Footer, Tabs as tab } from "../src/components/Footer";
 const Lottery: NextPage = () => {
   return (
     <>
-      <Container p="20px">
+      <Container p="30px">
+        <Box display="flex" flexDir="row" justifyContent="flex-end" mb="20px">
+          <Button
+            w="20%"
+            style={{
+              backgroundColor: "#E85B9E",
+              color: "black",
+              fontWeight: "200px",
+            }}
+          >
+            กลับ
+          </Button>
+        </Box>
         <Tabs>
           <TabList>
-            <Tab> หน้าเเรก </Tab>
+            <Tab> ทั่วไป </Tab>
             <Tab>สองตัวท้าย</Tab>
             <Tab>สามตัวท้าย</Tab>
           </TabList>
 
           <TabPanels>
-            <TabPanel>
+            <TabPanel p="0px">
               <NonFilter />
             </TabPanel>
-            <TabPanel>
+            <TabPanel p="0px">
               <LastTwo />
             </TabPanel>
-            <TabPanel>
+            <TabPanel p="0px">
               <LastThree />
             </TabPanel>
           </TabPanels>
