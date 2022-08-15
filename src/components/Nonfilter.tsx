@@ -76,7 +76,13 @@ export const NonFilter = () => {
                     onOpen();
                   }}
                 >
-                  <Text textAlign="center"> {number} </Text>
+                  <Text
+                    textAlign="center"
+                    color={selectedLottery.includes(number) ? "gray" : "black"}
+                  >
+                    {" "}
+                    {number}{" "}
+                  </Text>
                 </Box>
                 <Divider />
               </>

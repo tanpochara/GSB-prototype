@@ -25,7 +25,7 @@ const Home: NextPage = () => {
             </Text>
             <Text fontSize="20px" color="#E85B9E">
               {" "}
-              2 ใบ{" "}
+              {selectedLottery.length} ใบ{" "}
             </Text>
           </Box>
           <Divider m="10px 0px" />
