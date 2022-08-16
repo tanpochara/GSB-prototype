@@ -14,14 +14,17 @@ import { LastTwo } from "../src/components/lastTwo";
 import { LastThree } from "../src/components/lastThree";
 import { NonFilter } from "../src/components/Nonfilter";
 import { Footer, Tabs as tab } from "../src/components/Footer";
+import { useRouter } from "next/router";
 
 const Lottery: NextPage = () => {
+  const router = useRouter();
   return (
     <>
       <Container p="30px">
         <Box display="flex" flexDir="row" justifyContent="flex-end" mb="20px">
           <Button
             w="20%"
+            onClick={() => router.push("/home")}
             style={{
               backgroundColor: "#E85B9E",
               color: "black",
