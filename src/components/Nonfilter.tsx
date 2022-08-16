@@ -26,11 +26,6 @@ export const NonFilter = () => {
   const [displayNumber, setDisplayNumber] = useState(availableNumber);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const getRandom = () => {
-    const temp = Math.floor(Math.random() * 2) == 1;
-    setStatus(temp);
-  };
-
   const handlechangInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const temp = e.target.value;
     const display = availableNumber.filter((num: string) => {
@@ -72,7 +67,6 @@ export const NonFilter = () => {
                   p="10px"
                   onClick={() => {
                     setSelected(number);
-                    getRandom();
                     onOpen();
                   }}
                 >
@@ -102,7 +96,8 @@ export const NonFilter = () => {
               คุณต้องการซื้อเลข : {selected}{" "}
             </Text>
             <Text color="black" fontSize="20px">
-              สถานะ: {status ? "มี" : "หมด"}
+              สถานะ:{" "}
+              {selectedLottery.includes(selected) ? "เลือกไปเเล้ว" : "มี"}
             </Text>
           </ModalBody>
 
@@ -113,7 +108,7 @@ export const NonFilter = () => {
             <Button
               colorScheme="whatsapp"
               onClick={handleBuyLottery}
-              disabled={!status}
+              disabled={selectedLottery.includes(selected)}
             >
               {" "}
               ดำเนินการซื้อ{" "}
